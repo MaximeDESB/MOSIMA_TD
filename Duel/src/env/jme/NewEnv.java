@@ -457,6 +457,7 @@ public class NewEnv extends SimpleApplication {
 			Vector3f dir = target.subtract(origin).normalize();
 			
 			FinalAgent enemyAgent = (FinalAgent) agents.get(enemy);
+			FinalAgent thisAgent = (FinalAgent) agents.get(agent);
 			
 			if (isVisible(agent, enemy, MAX_DISTANCE)) {
 
@@ -471,6 +472,7 @@ public class NewEnv extends SimpleApplication {
 					
 					enemyAgent.life -= AbstractAgent.SHOT_DAMAGE;
 					enemyAgent.lastHit = System.currentTimeMillis();
+					enemyAgent.saveGetShoot();
 
 					if (enemyAgent.life <=0) {
 						enemyAgent.dead = true;
@@ -480,6 +482,8 @@ public class NewEnv extends SimpleApplication {
 						
 						if(!enemy.equals("Player1")){
 							PrologBehavior.sit.victory = true;
+							thisAgent.saveWin();
+							
 						}
 						
 						saveCSV();
@@ -506,6 +510,23 @@ public class NewEnv extends SimpleApplication {
 		System.out.println(res);
 		try{
 		    PrintWriter writer = new PrintWriter(System.getProperty("user.dir")+"/ressources/simus/Mosimu_"+id+".csv", "UTF-8");
+		    writer.println(res);
+		    writer.close();
+		    System.out.println("Execution result saved in /ressources/simus/");
+		} catch (IOException e) {
+		  System.out.println(e);
+		  System.out.println("Experiment saving failed");
+		}
+		
+	}
+	
+public static void saveCSV(String folder, String name){
+		
+		String res = PrologBehavior.sit.toCSVFile();
+		int id = new Random().nextInt(10000);
+		System.out.println(res);
+		try{
+		    PrintWriter writer = new PrintWriter(System.getProperty("user.dir")+"/ressources/learningBase/"+folder+id+"_"+name+".csv", "UTF-8");
 		    writer.println(res);
 		    writer.close();
 		    System.out.println("Execution result saved in /ressources/simus/");

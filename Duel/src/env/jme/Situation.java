@@ -138,6 +138,7 @@ public class Situation {
 			sit.enemy = t.getSecond();
 			sit.enemyInSight = true;
 			sit.impactProba = a.impactProba(a.getCurrentPosition(), t.getFirst());
+			a.saveSeeEnemy();
 		}
 		
 	}

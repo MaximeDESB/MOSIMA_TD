@@ -200,6 +200,7 @@ public class OurExploreBehavior extends TickerBehaviour {
 				return Type.Offensive;
 			}
 		}
+		return null;
 	}
 
 	void randomMove() {
