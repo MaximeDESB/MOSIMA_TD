@@ -113,9 +113,9 @@ public class Principal {
 		List<AgentController> agentList = new ArrayList<AgentController>();
 
 		c = containerList.get("container0");
-		agentName = "pascal";
+		agentName = "dummy";
 		try {
-			Object[] objtab = new Object[] { env, true };// used to give informations to the agent (the behaviours to
+			Object[] objtab = new Object[] { env,false };// used to give informations to the agent (the behaviours to
 															// trigger)
 			AgentController ag = c.createNewAgent(agentName, FinalAgent.class.getName(), objtab);
 			agentList.add(ag);

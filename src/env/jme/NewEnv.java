@@ -65,6 +65,7 @@ import sma.actionsBehaviours.LegalActions.LegalAction;
 import sma.actionsBehaviours.LegalActions.Orientation;
 import sma.actionsBehaviours.PrologBehavior;
 import sma.agents.FinalAgent;
+import sma.ourActionsBehaviours.OurPrologBehavior;
 
 
 /**
@@ -481,7 +482,7 @@ public class NewEnv extends SimpleApplication {
 						System.out.println("Simulation done");
 						
 						if(!enemy.equals("Player1")){
-							PrologBehavior.sit.victory = true;
+							OurPrologBehavior.sit.victory = true;
 							thisAgent.saveWin();
 							
 						}
@@ -505,7 +506,7 @@ public class NewEnv extends SimpleApplication {
 	
 	public static void saveCSV(){
 		
-		String res = PrologBehavior.sit.toCSVFile();
+		String res = OurPrologBehavior.sit.toCSVFile();
 		int id = new Random().nextInt(10000);
 		System.out.println(res);
 		try{
@@ -520,16 +521,16 @@ public class NewEnv extends SimpleApplication {
 		
 	}
 	
-public static void saveCSV(String folder, String name){
+public void saveCSV(String folder, String name){
 		
-		String res = PrologBehavior.sit.toCSVFile();
+		String res = OurPrologBehavior.sit.toCSVFile();
 		int id = new Random().nextInt(10000);
 		System.out.println(res);
 		try{
 		    PrintWriter writer = new PrintWriter(System.getProperty("user.dir")+"/ressources/learningBase/"+folder+id+"_"+name+".csv", "UTF-8");
 		    writer.println(res);
 		    writer.close();
-		    System.out.println("Execution result saved in /ressources/simus/");
+		    System.out.println("Execution result saved in /ressources/learningBase/");
 		} catch (IOException e) {
 		  System.out.println(e);
 		  System.out.println("Experiment saving failed");

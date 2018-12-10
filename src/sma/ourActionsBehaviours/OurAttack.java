@@ -32,6 +32,7 @@ public class OurAttack extends TickerBehaviour{
 		lastTimeSeen = System.currentTimeMillis();
 		openFire = false;
 		System.out.println("Player Attack");
+		onTick();
 	}
 
 	
@@ -42,6 +43,7 @@ public class OurAttack extends TickerBehaviour{
 		askForFirePermission();
 	
 		agent.goTo(lastPosition);
+		System.out.println("remi attack");
 		
 		if(agent.isVisible(enemy, AbstractAgent.VISION_DISTANCE)){
 			lastTimeSeen = System.currentTimeMillis();
@@ -68,7 +70,7 @@ public class OurAttack extends TickerBehaviour{
 	}
 	
 	public static void askForFirePermission(){
-		String query = "toOpenFire("
+		String query = "our_toOpenFire("
 					+OurPrologBehavior.sit.enemyInSight +","
 					+OurPrologBehavior.sit.impactProba+")";
 		

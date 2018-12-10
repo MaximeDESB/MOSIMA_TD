@@ -39,6 +39,7 @@ public class OurPrologBehavior extends TickerBehaviour {
 	protected void onTick() {
 		try {
 			String prolog = "consult('./ressources/prolog/duel/ourRequete.pl')";
+			
 
 			if (!Query.hasSolution(prolog)) {
 				System.out.println("Cannot open file " + prolog);
@@ -81,7 +82,9 @@ public class OurPrologBehavior extends TickerBehaviour {
 				}
 			}
 		} catch (Exception e) {
+			System.out.print(e.getStackTrace());
 			System.err.println("Behaviour file for Prolog agent not found");
+			
 			System.exit(0);
 		}
 		randomMove();
@@ -114,7 +117,7 @@ public class OurPrologBehavior extends TickerBehaviour {
 			agent.currentBehavior = h;
 			agent.addBehaviour(h);
 
-		} else if (nextBehavior == Attack.class) {
+		} else if (nextBehavior == OurAttack.class) {
 
 			OurAttack a = new OurAttack(agent, OurAgent.PERIOD, sit.enemy);
 			agent.currentBehavior = a;

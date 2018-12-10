@@ -101,8 +101,9 @@ public class FinalAgent extends AbstractAgent {
 			} else {
 				addBehaviour(new DumbBehavior(this, PERIOD));
 			}
-
-			deployAgent((NewEnv) args[0], useOurProlog);
+			
+			
+			deployAgent((NewEnv) args[0], useProlog);
 
 			System.out.println("Agent " + getLocalName() + " deployed !");
 
