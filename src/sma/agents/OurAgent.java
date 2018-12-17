@@ -109,5 +109,20 @@ public class OurAgent extends FinalAgent {
 			System.exit(-1);
 		}
 	}
-
+	
+	public void saveSeeEnemy() {
+		NewEnv.saveCSV("seeEnemy/", getLocalName());
+	}
+	
+	public void saveGetShoot() {
+		NewEnv.saveCSV("getShot/", getLocalName());
+	}
+	
+	public void saveWin() {
+		NewEnv.saveCSV("victory/", getLocalName());
+	}
+	
+	public void saveDefeat() {
+		NewEnv.saveCSV("defeat/", getLocalName());
+	}
 }

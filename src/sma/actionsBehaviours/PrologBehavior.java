@@ -72,7 +72,6 @@ public class PrologBehavior extends TickerBehaviour {
 					if (Query.hasSolution(query)) {
 						// System.out.println("has solution");
 						setNextBehavior();
-
 					}
 				}
 			}

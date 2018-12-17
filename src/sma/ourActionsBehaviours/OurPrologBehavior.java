@@ -72,12 +72,13 @@ public class OurPrologBehavior extends TickerBehaviour {
 						terms.add(sit.timeSinceLastShot);
 					}
 
-						String query = prologQuery("our_" + b, terms);
-						if (Query.hasSolution(query)) {
-							// System.out.println("has solution");
-							setNextBehavior();
-
-						}
+					String query = prologQuery(b, terms);
+					/* if (b == "attack")
+						System.out.println("Attack query terms :" + terms); */
+					if (Query.hasSolution(query)) {
+						// System.out.println("has solution");
+						setNextBehavior();
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -86,13 +87,10 @@ public class OurPrologBehavior extends TickerBehaviour {
 		}
 		randomMove();
 	}
-	
+
 	void randomMove() {
 		long time = System.currentTimeMillis();
-		
-			agent.randomMove();
-			
-		
+		agent.randomMove();
 	}
 
 	public void setNextBehavior() {
@@ -114,8 +112,8 @@ public class OurPrologBehavior extends TickerBehaviour {
 			agent.currentBehavior = h;
 			agent.addBehaviour(h);
 
-		} else if (nextBehavior == Attack.class) {
-
+		} else if (nextBehavior == OurAttack.class) {
+			System.out.println("Setting our attack behavior !!");
 			OurAttack a = new OurAttack(agent, OurAgent.PERIOD, sit.enemy);
 			agent.currentBehavior = a;
 			agent.addBehaviour(a);
@@ -125,7 +123,7 @@ public class OurPrologBehavior extends TickerBehaviour {
 	}
 
 	public String prologQuery(String behavior, ArrayList<Object> terms) {
-		String query = behavior + "(";
+		String query = "our_" + behavior + "(";
 		for (Object t : terms) {
 			query += t + ",";
 		}
