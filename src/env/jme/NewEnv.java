@@ -481,10 +481,13 @@ public class NewEnv extends SimpleApplication {
 						System.out.println(enemy+" killed.");
 						System.out.println("Simulation done");
 						
-						if(!enemy.equals("Player1")){
+						if(agent.equals("remi")){
 							OurPrologBehavior.sit.victory = true;
-							thisAgent.saveWin();
-							
+							thisAgent.saveWin(enemyAgent);
+						}
+						else {
+							OurPrologBehavior.sit.victory = false;
+							enemyAgent.saveWin(thisAgent);
 						}
 						
 						saveCSV();
@@ -537,6 +540,23 @@ public void saveCSV(String folder, String name){
 		}
 		
 	}
+
+public void saveCSV(String folder, String name, FinalAgent enemy){
+	
+	String res = OurPrologBehavior.sit.toCSVFile(enemy);
+	int id = new Random().nextInt(10000);
+	System.out.println(res);
+	try{
+	    PrintWriter writer = new PrintWriter(System.getProperty("user.dir")+"/ressources/learningBase/"+folder+id+"_"+name+".csv", "UTF-8");
+	    writer.println(res);
+	    writer.close();
+	    System.out.println("Execution result saved in /ressources/learningBase/");
+	} catch (IOException e) {
+	  System.out.println(e);
+	  System.out.println("Experiment saving failed");
+	}
+	
+}
 
 	public synchronized float impactProba(Vector3f origin, Vector3f target){
 

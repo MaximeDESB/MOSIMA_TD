@@ -170,7 +170,30 @@ public class Situation {
 		return res;
 	}
 	
-	
-	
-	
+	public String toCSVFile(FinalAgent enemy){
+		String res = "";//getCSVColumns()+"\n";
+		
+		//set the curent pos 
+		//regarde l'agent enemy comme référence de position
+		
+		String currentPos = null;
+		float enemyPos = enemy.getCurrentPosition().getY();
+		System.out.println(enemyPos + "  " + currentAltitude);
+		
+		if (currentAltitude < enemyPos-2) {
+			currentPos = "low";
+		}else if (currentAltitude > enemyPos+2) {
+			currentPos = "high";
+		}else {
+			currentPos = "mid";
+		}
+		
+		res+=offSize+";"+defSize+";"+offValue+";"+defValue+";"+averageAltitude+";"+minAltitude+";"+maxAltitude+";"+currentAltitude+";"+fovValue+";"+lastAction+";"+life
+				+";"+impactProba+";"+currentPos+";";
+		
+		res+= (victory)?"VICTORY":"DEFEAT";
+		
+		return res;
+	}
+
 }

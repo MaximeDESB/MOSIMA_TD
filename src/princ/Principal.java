@@ -17,7 +17,6 @@ import jade.wrapper.StaleProxyException;
 import sma.agents.FinalAgent;
 import sma.agents.OurAgent;
 
-
 public class Principal {
 
 	private static String hostname = "127.0.0.1";
@@ -30,7 +29,6 @@ public class Principal {
 	private static NewEnv env;// static ref of the real environment
 
 	public static void main(String[] args) {
-
 		// 0) Create the environment
 		env = NewEnv.launchRandom(64);
 		// env = Environment.launch("circleMap2");
@@ -115,7 +113,7 @@ public class Principal {
 		c = containerList.get("container0");
 		agentName = "dummy";
 		try {
-			Object[] objtab = new Object[] { env,false };// used to give informations to the agent (the behaviours to
+			Object[] objtab = new Object[] { env, false };// used to give informations to the agent (the behaviours to
 															// trigger)
 			AgentController ag = c.createNewAgent(agentName, FinalAgent.class.getName(), objtab);
 			agentList.add(ag);
@@ -125,11 +123,11 @@ public class Principal {
 			e.printStackTrace();
 		}
 
-		//notre agent
+		// notre agent
 		agentName = "remi";
 		try {
 
-			Object[] objtab = new Object[] { env, true};// used to give informations to the agent
+			Object[] objtab = new Object[] { env, true };// used to give informations to the agent
 			AgentController ag = c.createNewAgent(agentName, OurAgent.class.getName(), objtab);
 			agentList.add(ag);
 			System.out.println(agentName + " launched");
