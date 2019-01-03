@@ -153,8 +153,8 @@ public class AbstractAgent extends Agent implements EnvironmentManager {
 		env.saveCSV("seeEnemy", getLocalName());
 	}
 	
-	public void saveGetShoot() {
-		env.saveCSV("getShot", getLocalName());
+	public void saveGetShoot(FinalAgent enemy) {
+		env.saveCSV("getShot", getLocalName(),enemy);
 	}
 	
 	public void saveWin(FinalAgent enemy) {

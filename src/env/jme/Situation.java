@@ -180,9 +180,9 @@ public class Situation {
 		float enemyPos = enemy.getCurrentPosition().getY();
 		System.out.println(enemyPos + "  " + currentAltitude);
 		
-		if (currentAltitude < enemyPos-2) {
+		if (currentAltitude < enemyPos-3) {
 			currentPos = "low";
-		}else if (currentAltitude > enemyPos+2) {
+		}else if (currentAltitude > enemyPos+3) {
 			currentPos = "high";
 		}else {
 			currentPos = "mid";
