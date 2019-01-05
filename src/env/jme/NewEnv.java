@@ -449,7 +449,8 @@ public class NewEnv extends SimpleApplication {
 
 					enemyAgent.life -= AbstractAgent.SHOT_DAMAGE;
 					enemyAgent.lastHit = System.currentTimeMillis();
-					enemyAgent.saveGetShoot(thisAgent);
+					if (thisAgent.useOurProlog)
+						enemyAgent.saveGetShoot(thisAgent);
 
 					if (enemyAgent.life <= 0) {
 						enemyAgent.dead = true;

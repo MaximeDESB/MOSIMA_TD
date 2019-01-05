@@ -16,7 +16,14 @@ import sma.actionsBehaviours.Attack;
 import sma.actionsBehaviours.ExploreBehavior;
 import sma.actionsBehaviours.HuntBehavior;
 import sma.agents.OurAgent;
+import weka.classifiers.Evaluation;
+import weka.classifiers.trees.J48;
+import weka.core.Instances;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,12 +34,31 @@ public class OurPrologBehavior extends TickerBehaviour {
 
 	public static OurAgent agent;
 	public static Class nextBehavior;
+	public static J48 dt;
+	public static Evaluation eval;
+	public static Instances train;
 
 	public static Situation sit;
 
-	public OurPrologBehavior(Agent a, long period) {
+	public OurPrologBehavior(Agent a, long period) throws Exception {
 		super(a, period);
 		agent = (OurAgent) ((AbstractAgent) a);
+		
+		BufferedReader buf =null;
+		try {
+			buf = new BufferedReader(new FileReader("/home/cmt/Documents/WEKA/data.arff"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		train = new Instances(buf);
+		train.setClassIndex(train.numAttributes()-1);
+
+		dt=new J48();
+		dt.buildClassifier(train);
+		
+		eval= new Evaluation(train);
 	}
 
 	@Override

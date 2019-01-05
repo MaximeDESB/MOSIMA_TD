@@ -1,6 +1,7 @@
 package sma.ourActionsBehaviours;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 import org.jpl7.Query;
@@ -18,7 +19,10 @@ import sma.InterestPoint.Type;
 import sma.actionsBehaviours.LegalActions.LegalAction;
 import sma.agents.FinalAgent;
 import sma.agents.FinalAgent.MoveMode;
+import weka.associations.tertius.IndividualInstance;
+import weka.classifiers.trees.J48;
 import weka.core.Debug;
+import weka.core.Instance;
 
 public class OurExploreBehavior extends TickerBehaviour {
 
@@ -39,6 +43,7 @@ public class OurExploreBehavior extends TickerBehaviour {
 	private boolean random_test;
 	private Vector3f target;
 	private Type targetType;
+	
 
 	private long randDate;
 
@@ -59,9 +64,15 @@ public class OurExploreBehavior extends TickerBehaviour {
 			randomMove();
 			return;
 		}
-
+		
 		if (agent.getCurrentPosition().distance(target) < AbstractAgent.NEIGHBORHOOD_DISTANCE) {
-			Vector3f nei = findInterestingNeighbor();
+			Vector3f nei = null;
+			try {
+				nei = findInterestingNeighbor();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			if (nei != null && agent.getCurrentPosition().distance(nei) < AbstractAgent.NEIGHBORHOOD_DISTANCE / 2f) {
 				// System.out.println("Better Neighbor");
 				target = nei;
@@ -83,12 +94,56 @@ public class OurExploreBehavior extends TickerBehaviour {
 		}
 	}
 
-	Vector3f findInterestingNeighbor() {
-		if (targetType == Type.Offensive) {
-			return findHighestNeighbor();
-		} else {
-			return findLowestNeighbor();
+	Vector3f findInterestingNeighbor() throws Exception {
+		ArrayList<Vector3f> points = agent.sphereCast(agent.getSpatial(), AbstractAgent.NEIGHBORHOOD_DISTANCE,
+				AbstractAgent.CLOSE_PRECISION, AbstractAgent.VISION_ANGLE);
+		
+		points = getRandom(points, 6);
+		ArrayList<Vector3f> good = new ArrayList<Vector3f>();
+		ArrayList<Vector3f> bad = new ArrayList<Vector3f>();
+		
+		for (Vector3f point : points) {
+			float altitude = point.getY();
+			int life = agent.life;
+			
+	        Instance testInstance = getTestInstance(altitude, life);
+	        int result = (int) OurPrologBehavior.dt.classifyInstance(testInstance);
+	        if (result == 0) 
+	        	good.add(point);
+	        else 
+	        	bad.add(point);
 		}
+		
+		if (!good.isEmpty()) {
+			return getRandom(good, 1).get(0);
+		}else {
+			return getRandom(bad, 1).get(0);
+		}
+		
+	}
+	
+	 public Instance getTestInstance (float altitude, float life) {
+	        Instance instance = new Instance(3);
+	        instance.setDataset(OurPrologBehavior.train);
+	        System.out.println(OurPrologBehavior.train.attribute(0));
+	        instance.setValue(OurPrologBehavior.train.attribute(0), altitude);
+	        instance.setValue(OurPrologBehavior.train.attribute(1), life);
+	        instance.setValue(OurPrologBehavior.train.attribute(2), "VICTORY");
+	        return instance;
+	    }
+	
+	public ArrayList<Vector3f> getRandom(ArrayList<Vector3f> array, int number) {
+	    int rnd = 0;
+	    ArrayList<Vector3f> retour = new ArrayList<Vector3f>();
+	    for (int i = 0; i<number;i++) {
+	    	rnd = new Random().nextInt(array.size());
+	    	Vector3f temp = array.get(rnd);
+	    	if (!Arrays.asList(retour).contains(temp)) 
+	    		retour.add(temp);
+	    	else 
+	    		i--;
+	    }
+	    return retour;
 	}
 
 	Vector3f findHighestNeighbor() {
@@ -187,10 +242,8 @@ public class OurExploreBehavior extends TickerBehaviour {
 	Type getNextTargetType() {
 
 		if (agent.useOurProlog) {
-			float a = OurPrologBehavior.sit.averageAltitude;
-			float c = agent.getCurrentPosition().getY();
-			//last action
-			//
+
+
 			
 			Random r = new Random();
 			// theoretically, the function should check in the environment that the

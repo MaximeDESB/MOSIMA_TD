@@ -95,7 +95,12 @@ public class OurAgent extends FinalAgent {
 			useOurProlog = ((boolean) args[1]);
 
 			if (useOurProlog) {
-				addBehaviour(new OurPrologBehavior(this, PERIOD));
+				try {
+					addBehaviour(new OurPrologBehavior(this, PERIOD));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			} else {
 				addBehaviour(new DumbBehavior(this, PERIOD));
 			}
