@@ -187,6 +187,11 @@ public class OurExploreBehavior extends TickerBehaviour {
 	Type getNextTargetType() {
 
 		if (agent.useOurProlog) {
+			float a = OurPrologBehavior.sit.averageAltitude;
+			float c = agent.getCurrentPosition().getY();
+			//last action
+			//
+			
 			Random r = new Random();
 			// theoretically, the function should check in the environment that the
 			// conditions for the fish to be hooked are met.
