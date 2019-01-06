@@ -46,7 +46,7 @@ public class OurPrologBehavior extends TickerBehaviour {
 		
 		BufferedReader buf =null;
 		try {
-			buf = new BufferedReader(new FileReader("/home/cmt/Documents/WEKA/data.arff"));
+			buf = new BufferedReader(new FileReader("./ressources/data.arff"));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

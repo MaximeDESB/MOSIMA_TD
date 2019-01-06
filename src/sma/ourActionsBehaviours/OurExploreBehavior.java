@@ -125,12 +125,12 @@ public class OurExploreBehavior extends TickerBehaviour {
 	 public Instance getTestInstance (float altitude, float life) {
 	        Instance instance = new Instance(3);
 	        instance.setDataset(OurPrologBehavior.train);
-	        System.out.println(OurPrologBehavior.train.attribute(0));
 	        instance.setValue(OurPrologBehavior.train.attribute(0), altitude);
 	        instance.setValue(OurPrologBehavior.train.attribute(1), life);
 	        instance.setValue(OurPrologBehavior.train.attribute(2), "VICTORY");
 	        return instance;
 	    }
+
 	
 	public ArrayList<Vector3f> getRandom(ArrayList<Vector3f> array, int number) {
 	    int rnd = 0;
